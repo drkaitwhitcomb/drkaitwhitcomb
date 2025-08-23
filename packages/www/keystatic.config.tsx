@@ -5,7 +5,7 @@ export default config({
     kind: "cloud",
   },
   cloud: {
-    project: 'drkaitwhitcomb/drkaitwhitcomb.com',
+    project: 'drkaitwhitcomb/drkaitwhitcomb',
   },
   ui: {
     brand: {
