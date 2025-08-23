@@ -22,8 +22,11 @@ function normalizeSlug(value: any, key: string) {
   return s.replace(/^\/+/g, "").replace(/\/+$/g, "");
 }
 
-const segments = Astro.params.page as string[] | undefined;
-const slugParam = segments?.join("/") || undefined;
+// In Astro, a catch-all param like `[...page]` is provided as a single string (e.g. "a/b"), not an array
+const slugParam =
+  typeof Astro.params.page === "string" && Astro.params.page !== ""
+    ? Astro.params.page
+    : undefined;
 
 let pageKey = "home";
 if (slugParam && slugParam !== "") {

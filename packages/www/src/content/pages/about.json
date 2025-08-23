@@ -15,6 +15,13 @@
             "type": "header",
             "content": "About Dr. Kait Whitcomb",
             "span": 3
+          },
+          {
+            "type": "callout",
+            "span": 1,
+            "order": 3,
+            "content": "I'm a licensed psychologist practicing in Oviedo, Florida. I earned my PhD in Clinical Psychology in 2017 from Brigham Young University, then completed a postdoctoral residency at a university counseling center. I opened my own practice in 2019. I specialize in treating adults with OCD, PTSD, anxiety, and depression. It is important to me that clients of all identities and from all cultural backgrounds feel safe, accepted, and celebrated in my practice.​",
+            "title": " My experience and training"
           }
         ],
         "grids": [
