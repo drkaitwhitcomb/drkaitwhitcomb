@@ -1,11 +1,8 @@
-import pagesRaw from "@/configs/pages.json";
+import pagesRaw from "@/configs/pages";
 
 type ReservedKeys = "$resource" | "$version";
 
-// Optional: keep literal types by freezing a const copy
-const pagesConst = pagesRaw as const;
-
-export type Pages = Omit<typeof pagesConst, ReservedKeys>;
+export type Pages = Omit<typeof pagesRaw, ReservedKeys>;
 export type PageKey = keyof Pages;
 
 function assertResource(resource: unknown, expected: string): asserts resource is string {
@@ -17,6 +14,6 @@ function assertResource(resource: unknown, expected: string): asserts resource i
 assertResource((pagesRaw as any).$resource, "pages");
 
 export function usePage<const K extends PageKey>(name: K): Pages[K] {
-    const pages = pagesConst as Pages; // strip reserved keys at the type level
-    return pages[name] as Pages[K];
+    const pages = pagesRaw as Pages;
+    return pages[name];
 }

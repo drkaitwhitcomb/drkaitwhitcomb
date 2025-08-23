@@ -19,7 +19,11 @@ const { title, masonry } = Astro.props;
 
 <PageLayout title={title}>
   <Header slot="header" {...header} />
-  <Masonry client:load slot="main" masonry={masonry} />
+  {masonry ? (
+    <Masonry client:load slot="main" masonry={masonry} />
+  ) : (
+    <slot name="main" />
+  )}
   <Navigator slot="navigator" client:load />
   <Footer slot="footer" {...footer} />
   <slot name="debug" />

@@ -2,7 +2,7 @@ import { config, fields, collection, singleton } from '@keystatic/core';
 
 export default config({
   storage: {
-    kind: 'local',
+    kind: 'cloud',
   },
   ui: {
     brand: {
@@ -18,37 +18,52 @@ export default config({
   singletons: {
     themes: singleton({
       label: "Themes",
+      format: "json",
+      path: "/src/configs/themes",
       schema: {
-        themes: fields.array(
-          fields.select({
-            label: 'Theme',
-            options: [{ label: 'Light', value: 'light' }, { label: 'Dark', value: 'dark' }],
-            defaultValue: 'light',
-          }),
-        )
+        default: fields.object({
+          font: fields.text({ label: 'Font' }),
+          colors: fields.object({
+            primary: fields.text({ label: 'Primary' }),
+            secondary: fields.text({ label: 'Secondary' }),
+            tertiary: fields.text({ label: 'Tertiary' }),
+            quaternary: fields.text({ label: 'Quaternary' }),
+          })
+        })
       }
     }),
     header: singleton({
       label: "Header",
+      format: "json",
+      path: "/src/configs/header",
       schema: {
-        title: fields.slug({ name: { label: 'Title' } }),
-        theme: fields.select({
-          label: 'Theme',
-          options: [{ label: 'Light', value: 'light' }, { label: 'Dark', value: 'dark' }],
-          defaultValue: 'light',
+        favicon: fields.object({
+          image: fields.object({
+            alt: fields.text({ label: 'Alt' }),
+            src: fields.url({ label: 'Src' }),
+            url: fields.url({ label: 'URL' }),
+          }),
         }),
+        links: fields.array(
+          fields.object({
+            name: fields.text({ label: 'Name' }),
+            url: fields.url({ label: 'URL' }),
+          })
+        ),
       }
     }),
     images: singleton({
       label: "Images",
+      format: "json",
+      path: "/src/configs/images",
       schema: {
-        images: fields.array(
-          fields.image({
-            label: 'Image',
-            directory: '/src/assets/images',
-            publicPath: '/assets/images/',
-          })
-        ),
+        map: fields.text({ label: 'Map URL' }),
+        nature: fields.text({ label: 'Nature URL' }),
+        overlooking: fields.text({ label: 'Overlooking URL' }),
+        flowers: fields.text({ label: 'Flowers URL' }),
+        office: fields.text({ label: 'Office URL' }),
+        profile: fields.text({ label: 'Profile URL' }),
+        landscape: fields.text({ label: 'Landscape URL' }),
       }
     }),
     footer: singleton({
@@ -85,13 +100,11 @@ export default config({
     }),
     navigator: singleton({
       label: "Navigator",
+      format: "json",
+      path: "/src/configs/navigator",
       schema: {
-        title: fields.slug({ name: { label: 'Title' } }),
-        theme: fields.select({
-          label: 'Theme',
-          options: [{ label: 'Light', value: 'light' }, { label: 'Dark', value: 'dark' }],
-          defaultValue: 'light',
-        }),
+        $resource: fields.text({ label: 'Resource' }),
+        $version: fields.text({ label: 'Version' }),
       }
     }),
     metadata: singleton({
