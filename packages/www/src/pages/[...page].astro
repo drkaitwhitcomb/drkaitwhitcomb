@@ -33,6 +33,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const param = (Astro.params.page || "") as string;
 
 let layoutTitle: string = "";
+let description: string | undefined = undefined;
 let masonry: any | undefined;
 let isPost = false;
 let PostContent: any | null = null;
@@ -44,6 +45,7 @@ if (param.startsWith("posts/")) {
   const rendered = await post.render();
   PostContent = rendered.Content;
   layoutTitle = post.data.title ?? slug;
+  description = (post.data as any)?.description ?? undefined;
   isPost = true;
 } else {
   const match = entries.find(([key, value]) => {
@@ -54,13 +56,14 @@ if (param.startsWith("posts/")) {
   const [pageKey] = match as [keyof typeof pagesRaw, any];
   const page = usePage(pageKey as any);
   layoutTitle = page?.metadata?.title ?? page?.metaData?.pageTitle ?? String(pageKey);
+  description = page?.metadata?.description ?? page?.metaData?.description ?? undefined;
   masonry = page?.data?.masonry;
 }
 ---
 
-{!isPost && <ApplicationLayout title={layoutTitle} masonry={masonry} />}
+{!isPost && <ApplicationLayout title={layoutTitle} description={description} masonry={masonry} />}
 {isPost && (
-  <ApplicationLayout title={layoutTitle}>
+  <ApplicationLayout title={layoutTitle} description={description}>
     <div slot="main" class="prose mx-auto px-4 py-8">
       {PostContent && <PostContent />}
     </div>

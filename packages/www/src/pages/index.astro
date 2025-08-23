@@ -2,7 +2,9 @@
 import ApplicationLayout from "@/layouts/ApplicationLayout.astro";
 import { usePage } from "@/hooks/usePage";
 
-const { data, metadata } = usePage("home" as const);
+const page = usePage("home" as const);
+const data = page?.data ?? {};
+const metadata = page?.metadata ?? {};
 ---
 
-<ApplicationLayout title={metadata.title} masonry={data.masonry} />
+<ApplicationLayout title={metadata.title} description={metadata.description} masonry={data.masonry} />

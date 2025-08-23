@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title={Astro.props.title}>
+<BaseLayout title={Astro.props.title} description={Astro.props.description}>
   <div class="flex flex-col min-h-screen w-screen">
     <slot name="header" />
     <slot name="navigator" />
