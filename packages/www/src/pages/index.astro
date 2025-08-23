@@ -2,7 +2,7 @@
 import ApplicationLayout from "@/layouts/ApplicationLayout.astro";
 import { usePage } from "@/hooks/usePage";
 
-const page = usePage("home" as const);
+const page: any = usePage("home" as const);
 const data = page?.data ?? {};
 const metadata = page?.metadata ?? {};
 ---

@@ -15,7 +15,7 @@ export interface Props {
 
 const { footer, header } = useConfiguration();
 
-const { title, description, masonry } = Astro.props;
+const { title, description, masonry } = Astro.props as Props;
 ---
 
 <PageLayout title={title} description={description}>

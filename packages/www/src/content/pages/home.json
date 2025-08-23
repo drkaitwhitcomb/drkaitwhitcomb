@@ -1,7 +1,6 @@
 {
   "$resource": "pages",
   "$version": "1.0.0",
-  "home": {
     "metadata": {
       "title": "Dr. Kait Whitcomb | Licensed Psychologist",
       "slug": "/",
@@ -11,7 +10,7 @@
         "icon": "/icons/apple-touch-icon.png",
         "apple": "/icons/apple-touch-icon.png"
       },
-      "description": "Individual therapy from a licensed psychologist"
+      "description": "Individual therapy from a licensed psychologist in Oveido, FL."
     },
     "data": {
       "masonry": {
@@ -83,5 +82,4 @@
         ]
       }
     }
-  }
 }

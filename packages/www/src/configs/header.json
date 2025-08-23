@@ -12,7 +12,7 @@
       "url": "/"
     },
     {
-      "name": "About Me",
+      "name": "About",
       "url": "/about"
     },
     {
@@ -24,4 +24,4 @@
       "url": "/contact"
     }
   ]
-}   
+}

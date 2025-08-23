@@ -1,71 +1,50 @@
 ---
-import type { GetStaticPaths } from "astro";
 import ApplicationLayout from "@/layouts/ApplicationLayout.astro";
 import pagesRaw from "@/configs/pages";
 import { usePage } from "@/hooks/usePage";
-import { getCollection, getEntry } from "astro:content";
 
-// Gather page entries from configs/pages.json
-const RESERVED = new Set(["$resource", "$version"]);
-const entries = Object.entries(pagesRaw).filter(([k]) => !RESERVED.has(k as any));
+type ReservedKeys = "$resource" | "$version";
+
+const entries = Object.entries(pagesRaw).filter(
+  ([key]) => !(["$resource", "$version"] as ReservedKeys[]).includes(key as ReservedKeys)
+);
 
 function normalizeSlug(value: any, key: string) {
-  const slug = value?.metadata?.slug ?? value?.metaData?.slug ?? key;
-  if (slug === "/" || slug === "") return "/";
-  return String(slug).replace(/^\//, "");
+  let slug = (value?.metadata?.slug ?? value?.metaData?.slug ?? key) as unknown;
+  // Support slug as string or string[]
+  if (Array.isArray(slug)) {
+    slug = slug.join("/");
+  }
+  if (slug == null) slug = "";
+  const s = String(slug).trim();
+  if (s === "/" || s === "") return "/";
+  // Trim leading/trailing slashes
+  return s.replace(/^\/+/g, "").replace(/\/+$/g, "");
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const pagePaths = entries
-    .map(([key, value]) => {
-      const slug = normalizeSlug(value, key);
-      if (slug === "/") return null; // index handled by src/pages/index.astro
-      return { params: { page: slug } };
-    })
-    .filter(Boolean) as { params: { page: string } }[];
+const segments = Astro.params.page as string[] | undefined;
+const slugParam = segments?.join("/") || undefined;
 
-  const posts = await getCollection("posts");
-  const postPaths = posts.map((post) => ({ params: { page: `posts/${post.slug}` } }));
-
-  return [...pagePaths, ...postPaths];
-};
-
-const param = (Astro.params.page || "") as string;
-
-let layoutTitle: string = "";
-let description: string | undefined = undefined;
-let masonry: any | undefined;
-let isPost = false;
-let PostContent: any | null = null;
-
-if (param.startsWith("posts/")) {
-  const slug = param.replace(/^posts\//, "");
-  const post = await getEntry("posts", slug);
-  if (!post) throw new Error(`No post found for slug: ${slug}`);
-  const rendered = await post.render();
-  PostContent = rendered.Content;
-  layoutTitle = post.data.title ?? slug;
-  description = (post.data as any)?.description ?? undefined;
-  isPost = true;
-} else {
+let pageKey = "home";
+if (slugParam && slugParam !== "") {
   const match = entries.find(([key, value]) => {
     const slug = normalizeSlug(value, key);
-    return slug === param || key === param;
+    return slug === slugParam || key === slugParam;
   });
-  if (!match) throw new Error(`Page not found for param: ${param}`);
-  const [pageKey] = match as [keyof typeof pagesRaw, any];
-  const page = usePage(pageKey as any);
-  layoutTitle = page?.metadata?.title ?? page?.metaData?.pageTitle ?? String(pageKey);
-  description = page?.metadata?.description ?? page?.metaData?.description ?? undefined;
-  masonry = page?.data?.masonry;
+  if (match) {
+    pageKey = match[0];
+  } else {
+    Astro.response.status = 404;
+    pageKey = "home";
+  }
 }
+
+const page = usePage(pageKey);
+const title =
+  page?.metadata?.title ?? page?.metaData?.pageTitle ?? pageKey;
+const description =
+  page?.metadata?.description ?? page?.metaData?.description ?? undefined;
+const masonry = page?.data?.masonry;
 ---
 
-{!isPost && <ApplicationLayout title={layoutTitle} description={description} masonry={masonry} />}
-{isPost && (
-  <ApplicationLayout title={layoutTitle} description={description}>
-    <div slot="main" class="prose mx-auto px-4 py-8">
-      {PostContent && <PostContent />}
-    </div>
-  </ApplicationLayout>
-)}
+<ApplicationLayout title={title} description={description} masonry={masonry} />

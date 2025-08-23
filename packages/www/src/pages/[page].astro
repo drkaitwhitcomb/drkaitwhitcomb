@@ -1,6 +1,47 @@
 ---
 import type { GetStaticPaths } from "astro";
+import ApplicationLayout from "@/layouts/ApplicationLayout.astro";
+import pagesRaw from "@/configs/pages";
+import { usePage, type PageKey } from "@/hooks/usePage";
 
-// Disabled: handled by src/pages/[...page].astro
-export const getStaticPaths: GetStaticPaths = async () => [];
+type ReservedKeys = "$resource" | "$version";
+
+const entries = Object.entries(pagesRaw).filter(
+  ([key]) =>
+    !(["$resource", "$version"] as ReservedKeys[]).includes(key as ReservedKeys)
+);
+
+function normalizeSlug(value: any, key: string) {
+  const slug = value?.metadata?.slug ?? value?.metaData?.slug ?? key;
+  if (slug === "/" || slug === "") return "/";
+  return String(slug).replace(/^\//, "");
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = entries
+    .map(([key, value]) => {
+      const slug = normalizeSlug(value, key);
+      if (slug === "/") return null; // index page handled by src/pages/index.astro
+      return { params: { page: slug } };
+    })
+    .filter(Boolean) as { params: { page: string } }[];
+  return paths;
+};
+
+const param = (Astro.params.page || "") as string;
+const match = entries.find(([key, value]) => {
+  const slug = normalizeSlug(value, key);
+  return slug === param || key === param;
+});
+
+if (!match) {
+  throw new Error(`Page not found for param: ${param}`);
+}
+
+const [pageKey] = match as [PageKey, any];
+const page = usePage(pageKey);
+const title = page?.metadata?.title ?? page?.metaData?.pageTitle ?? pageKey;
+const masonry = page?.data?.masonry;
 ---
+
+<ApplicationLayout title={title} masonry={masonry} />
