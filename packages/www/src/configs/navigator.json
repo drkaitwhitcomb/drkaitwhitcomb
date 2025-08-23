@@ -1,5 +1,20 @@
 {
-    "$resource": "navigator",
-    "$version": "1.0.0"
-    
+     "actions": [
+          {
+            "url": "/",
+            "label": "Home"
+          },
+          {
+            "label": "About",
+            "url": "/about"
+          },
+          {
+            "label": "Services",
+            "url": "/services"
+          },
+          {
+            "label": "Contact",
+            "url": "/contact"
+          }
+        ]
 }

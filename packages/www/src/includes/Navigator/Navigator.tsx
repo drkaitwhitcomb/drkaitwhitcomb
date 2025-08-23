@@ -2,7 +2,13 @@ import { NavigatorActions } from "./NavigatorActions";
 import { NavigatorCover } from "./NavigatorCover";
 import { NavigatorContainer } from "./NavigatorContainer";
 
-export default function Navigator({ navigator }: any) {
+
+export interface Props {
+  actions?: any,
+  cover?: any
+}
+
+export default function Navigator({ actions, cover }: Props) {
 
   return (
     <NavigatorContainer>
