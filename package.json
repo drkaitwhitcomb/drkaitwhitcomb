@@ -19,9 +19,6 @@
     "Orlando,FL"
   ],
   "license": "MIT",
-  "packageManager": "pnpm@10.6.2",
-  "dependencies": {
-    "framer-motion": "^12.23.12",
-    "react-motion": "^0.5.2"
-  }
+  "packageManager": "pnpm@10.6.2"
+
 }
