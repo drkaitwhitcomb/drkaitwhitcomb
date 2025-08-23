@@ -1,0 +1,11 @@
+{
+  "default": {
+    "font": "Avenir",
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#FFFFFF",
+      "tertiary": "#000000",
+      "quaternary": "#000000"
+    }
+  }
+}

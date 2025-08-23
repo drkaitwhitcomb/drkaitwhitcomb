@@ -1,0 +1,26 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import Header from "@/includes/Header/Header.astro";
+import Footer from "@/includes/Footer/Footer.astro";
+import Navigator from "@/includes/Navigator/Navigator";
+import Masonry from "@/components/Masonry/Masonry";
+
+import { useConfiguration } from "@/hooks/useConfiguration";
+
+export interface Props {
+  title: string;
+  masonry?: any;
+}
+
+const { footer, header } = useConfiguration();
+
+const { title, masonry } = Astro.props;
+---
+
+<PageLayout title={title}>
+  <Header slot="header" {...header} />
+  <Masonry client:load slot="main" masonry={masonry} />
+  <Navigator slot="navigator" client:load />
+  <Footer slot="footer" {...footer} />
+  <slot name="debug" />
+</PageLayout>

@@ -1,0 +1,32 @@
+---
+import FooterContainer from "./FooterContainer.astro";
+import FooterCopyright from "./FooterCopyright.astro";
+import FooterAgencyTag from "./FooterAgencyTag.astro";
+import FooterPhoneNumber from "./FooterPhoneNumber.astro";
+import FooterEmailAddress from "./FooterEmailAddress.astro";
+import FooterLinks from "./FooterLinks.astro";
+
+import type { Props as FooterCopyrightProps } from "./FooterCopyright.astro";
+import type { Props as FooterAgencyTagProps } from "./FooterAgencyTag.astro";
+import type { Props as FooterPhoneNumberProps } from "./FooterPhoneNumber.astro";
+import type { Props as FooterEmailAddressProps } from "./FooterEmailAddress.astro";
+import type { Props as FooterLinksProps } from "./FooterLinks.astro";
+
+export interface Props {
+  copyright?: FooterCopyrightProps;
+  tag?: FooterAgencyTagProps;
+  phoneNumber?: FooterPhoneNumberProps;
+  emailAddress?: FooterEmailAddressProps;
+  links?: FooterLinksProps;
+}
+
+const { copyright, tag, phoneNumber, emailAddress, links } = Astro.props;
+---
+
+<FooterContainer>
+  {copyright && <FooterCopyright {...copyright} />}
+  {tag && <FooterAgencyTag {...tag} />}
+  {phoneNumber && <FooterPhoneNumber {...phoneNumber} />}
+  {emailAddress && <FooterEmailAddress {...emailAddress} />}
+  {links && <FooterLinks {...links} />}
+</FooterContainer>

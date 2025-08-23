@@ -1,0 +1,33 @@
+---
+import Link from "@/components/Link";
+import Image from "@/components/Image";
+
+const styles = {
+  container: `flex items-center justify-center w-full border-black h-36 m-1`,
+  image: `object-contain w-auto h-full`,
+};
+
+export interface Props {
+  favicon?: {
+    image?: {
+      url?: string;
+      src?: string;
+      alt?: string;
+    };
+  };
+}
+
+const { favicon } = Astro.props;
+---
+
+<main class={styles.container}>
+  <div class="flex backdrop-blur-lg items-center">
+    <Link url={favicon?.image?.url}>
+      <img
+        class={styles.image}
+        src={favicon?.image?.src}
+        alt={favicon?.image?.alt}
+      />
+    </Link>
+  </div>
+</main>

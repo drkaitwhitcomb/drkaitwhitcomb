@@ -1,0 +1,87 @@
+{
+  "$resource": "pages",
+  "$version": "1.0.0",
+  "home": {
+    "metadata": {
+      "title": "Dr. Kait Whitcomb | Licensed Psychologist",
+      "slug": "/",
+      "name": "Home",
+      "themeColor": "#C3CFBD",
+      "icons": {
+        "icon": "/icons/apple-touch-icon.png",
+        "apple": "/icons/apple-touch-icon.png"
+      },
+      "description": "Individual therapy from a licensed psychologist"
+    },
+    "data": {
+      "masonry": {
+        "container": {
+          "gap": 1,
+          "rows": 1,
+          "columns": 3
+        },
+        "grids": [
+          {
+            "id": "primary",
+            "columns": 2,
+            "gap": 1,
+            "span": 2,
+            "order": 1,
+            "items": [
+              {
+                "type": "image",
+                "span": 2,
+                "src": "/assets/images/nature-wheat-field.jpg"
+              },
+              {
+                "type": "header",
+                "content": "Office and Telehealth Visits Available",
+                "span": 2
+              },
+              {
+                "type": "image",
+                "span": 1,
+                "src": "/assets/images/office-chairs.jpg"
+              },
+              {
+                "type": "image",
+                "span": 1,
+                "src": "/assets/images/flower-painting.jpg"
+              }
+            ]
+          },
+          {
+            "id": "secondary",
+            "columns": 1,
+            "gap": 1,
+            "span": 1,
+            "order": 0,
+            "items": [
+              {
+                "type": "callout",
+                "sx": "flex-start content-start",
+                "title": "Individual Therapy from a Licensed Psychologist",
+                "link": {
+                  "label": "Learn More",
+                  "url": "/about"
+                },
+                "content": "I work with adult clients to help them find the healing they’re looking for. I’m glad you’re here!\n"
+              },
+              {
+                "type": "image",
+                "src": "/assets/images/kait-profile-picture.jpg"
+              },
+              {
+                "type": "contact",
+                "title": "Dr. Kait Whitcomb, LLC",
+                "emailAddress": "therapy@drkaitwhitcomb.com",
+                "faxNumber": "(407) 542-1804",
+                "phoneNumber": "(407) 493-2238"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

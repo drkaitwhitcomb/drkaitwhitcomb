@@ -1,10 +1,27 @@
 {
-  "name": "drkaitwhitcomb-psychology",
-  "version": "1.0.0",
-  "private": true,
+  "name": "drkaitwhitcomb.com",
+  "version": "2.0.0",
+  "description": "",
+  "author": "Dr. Kait Whitcomb",
+  "main": "index.js",
+  "homepage": "https://drkaitwhitcomb.com",
   "scripts": {
-    "readme:g": "npx @appnest/readme generate --config=docs.config.json && copy README.md sso"
-  
+    "www:dev": "cd packages/www && bun run dev",
+    "www:build": "cd packages/www && bun run build",
+    "www:preview": "cd packages/www && bun run preview",
+    "www:astro": "cd packages/www && bun run astro",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "astro",
+    "drkaitwhitcomb.com",
+    "psychiatry",
+    "Orlando,FL"
+  ],
+  "license": "MIT",
+  "packageManager": "pnpm@10.6.2",
+  "dependencies": {
+    "framer-motion": "^12.23.12",
+    "react-motion": "^0.5.2"
   }
- 
 }

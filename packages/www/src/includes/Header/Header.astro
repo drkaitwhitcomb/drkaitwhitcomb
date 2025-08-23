@@ -1,0 +1,17 @@
+---
+import HeaderContainer from "./HeaderContainer.astro";
+import Favicon from "./HeaderFavicon.astro";
+import Links from "./HeaderLinks.astro";
+
+export interface Props {
+  favicon?: any;
+  links?: any[];
+}
+
+const { favicon, links } = Astro.props;
+---
+
+<HeaderContainer>
+  <Favicon favicon={favicon} />
+  <Links links={links} />
+</HeaderContainer>

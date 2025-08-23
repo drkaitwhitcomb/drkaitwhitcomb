@@ -1,0 +1,11 @@
+---
+export interface Props {
+  emailAddress: string;
+}
+
+const { emailAddress } = Astro.props;
+
+const styles = `m-2 text-black dark:text-white text-md sm:text-center`;
+---
+
+<span title={emailAddress} class={styles}>{emailAddress}</span>

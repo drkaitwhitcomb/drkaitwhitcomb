@@ -1,0 +1,11 @@
+---
+export interface Props {
+  phoneNumber: string;
+}
+
+const { phoneNumber } = Astro.props;
+
+const styles = `m-2 text-black dark:text-white text-md sm:text-center`;
+---
+
+<span title={phoneNumber} class={styles}>{phoneNumber}</span>

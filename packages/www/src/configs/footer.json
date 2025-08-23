@@ -1,0 +1,45 @@
+{
+  "copyright": {
+    "copyright": "Dr. Kait Whitcomb LLC"
+  },
+  "links": {
+    "links": [
+      {
+        "name": "Home",
+        "url": "/"
+      },
+      {
+        "name": "About",
+        "url": "/about"
+      },
+      {
+        "name": "Services",
+        "url": "/services"
+      },
+      {
+        "name": "Contact",
+        "url": "/contact"
+      },
+      {
+        "name": "Resources",
+        "url": "/resources"
+      }
+    ]
+  },
+
+
+  "tag": {
+    "tag": {
+      "image": {
+        "src": "https://storage.ko-fi.com/cdn/useruploads/4a30523b-678b-4e1b-a85b-cb794cd29439.png",
+        "url": "https://ko-fi.com/desirablesolutions"
+      }
+    }
+  },
+  "phoneNumber": {
+    "phoneNumber": "(407) 493-2238"
+  },
+  "emailAddress": {
+    "emailAddress": "therapy@drkaitwhitcomb.com"
+  }
+}

@@ -1,0 +1,14 @@
+[metadata]
+basePath = "docs"
+
+[[section]]
+name = "Title"
+path = "TITLE.md"
+
+
+[[section]]
+title = ""
+path = ""
+
+[[section]]
+title = ""

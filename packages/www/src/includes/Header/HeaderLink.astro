@@ -1,0 +1,23 @@
+---
+export interface Props {
+  name: string;
+  url: string;
+}
+
+function defineStyles(styles: Record<string, string>) {
+  return () => styles;
+}
+
+export const styles = {
+  container: `flex items-center justify-center text-center backdrop-blur-lg transition-colors`,
+  span: `relative text-black dark:text-white tracking-tight whitespace-nowrap`,
+};
+
+const { name, url } = Astro.props;
+---
+
+<a class={styles.container} href={url}>
+  <span class={styles.span}>
+    {name}
+  </span>
+</a>

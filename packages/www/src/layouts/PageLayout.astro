@@ -1,0 +1,15 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title={Astro.props.title}>
+  <div class="flex flex-col min-h-screen w-screen">
+    <slot name="header" />
+    <slot name="navigator" />
+    <main class="flex-1 w-full">
+      <slot />
+      <slot name="main" />
+    </main>
+    <slot name="footer" />
+  </div>
+</BaseLayout>

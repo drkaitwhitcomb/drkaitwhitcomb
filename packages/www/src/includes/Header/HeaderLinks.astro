@@ -1,0 +1,16 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+
+export interface Props {
+  links?: any[];
+}
+
+const { links } = Astro.props;
+
+const styles = `flex-row hidden lg:flex items-center justify-center w-full min-h-10 border-black dark:border-white
+                border-opacity-100 gap-40 no-scrollbar border-t backdrop-blur-lg`;
+---
+
+<div class={styles}>
+  {links?.map((link: any) => <HeaderLink name={link?.name} url={link?.url} />)}
+</div>

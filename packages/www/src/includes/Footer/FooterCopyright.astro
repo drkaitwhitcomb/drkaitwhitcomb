@@ -1,0 +1,13 @@
+---
+export interface Props {
+  copyright: string;
+}
+
+const styles = `m-2 text-black dark:text-white text-md sm:text-center`;
+
+const { copyright } = Astro.props;
+---
+
+<span title={copyright} class={styles}
+  >{`© ${copyright}, ${new Date().getFullYear()}`}</span
+>

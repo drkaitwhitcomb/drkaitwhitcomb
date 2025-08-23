@@ -1,0 +1,22 @@
+---
+import Head from "@/includes/Head/Head.astro";
+import "@/styles/global.css";
+import { fade } from "astro:transitions";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<html lang="en" class="bg-white dark:bg-[#252525] text-black dark:text-white">
+  <Head title={title} description={description} />
+  <body
+    transition:animate={fade({ duration: 1111 })}
+    class="min-h-screen bg-white dark:bg-[#252525] text-black dark:text-white overflow-x-hidden overflow-y-auto transition-colors duration-200"
+  >
+    <slot />
+  </body>
+</html>

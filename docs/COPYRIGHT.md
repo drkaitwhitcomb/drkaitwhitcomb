@@ -1,3 +1,3 @@
-<h2>©️Copyright</h2>
+# ©️Copyright
 
-> ©️ 2023 Dr. Kait Whitcomb, LLC. All Rights Reserved.
+> ©️ 2025 Dr. Kait Whitcomb, LLC. All Rights Reserved.

@@ -1,0 +1,107 @@
+---
+import { ClientRouter } from "astro:transitions";
+import { SEO } from "astro-seo";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const faviconBasePath = "/assets/favicons/";
+
+const { title, description } = Astro.props;
+---
+
+<head>
+  <script>
+    {
+      `
+      (function() {
+        try {
+          var KEY = 'theme';
+          var stored = null;
+          try { stored = localStorage.getItem(KEY); } catch (e) {}
+          var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = stored ? stored === 'dark' : systemDark;
+          var root = document.documentElement;
+          if (isDark) {
+            root.classList.add('dark');
+            root.style.colorScheme = 'dark';
+          } else {
+            root.classList.remove('dark');
+            root.style.colorScheme = 'light';
+          }
+        } catch (_) {}
+      })();
+    `;
+    }
+  </script>
+  <meta charset="utf-8" />
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href={faviconBasePath + "favicon.png"} />
+  <link
+    rel="icon"
+    type="image/png"
+    href={faviconBasePath + "favicon-32x32.png"}
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    href={faviconBasePath + "favicon-16x16.png"}
+  />
+
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href={faviconBasePath + "apple-touch-icon.png"}
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href={faviconBasePath + "favicon-32x32.png"}
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href={faviconBasePath + "favicon-16x16.png"}
+  />
+  <link rel="manifest" href={faviconBasePath + "site.webmanifest"} />
+  <link
+    rel="mask-icon"
+    href={faviconBasePath + "safari-pinned-tab.svg"}
+    color="#5bbad5"
+  />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <link
+    rel="icon"
+    type="image/png"
+    href={faviconBasePath + "favicon-192x192.png"}
+  />
+
+  <meta name="viewport" content="width=device-width" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  <meta name="generator" content={Astro.generator} />
+
+  <SEO
+    title={title}
+    description={description}
+    openGraph={{
+      basic: {
+        title: title,
+        type: "website",
+        image:
+          "https://user-images.githubusercontent.com/5182256/131216951-8f74f425-f775-463d-a11b-0e01ad9fce8d.png",
+      },
+    }}
+    twitter={{
+      creator: "@drkaitwhitcomb",
+    }}
+  />
+  <ClientRouter />
+</head>

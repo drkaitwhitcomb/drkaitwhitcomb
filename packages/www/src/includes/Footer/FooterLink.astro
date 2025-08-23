@@ -1,0 +1,16 @@
+---
+export interface Props {
+  name: string;
+  url: string;
+}
+
+const { name, url } = Astro.props;
+
+const styles = `mr-4 text-black dark:text-white hover:underline md:mr-6`;
+---
+
+<li>
+  <a href={url} class={styles}>
+    {`${name}`}
+  </a>
+</li>

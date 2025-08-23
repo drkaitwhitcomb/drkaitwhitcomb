@@ -1,17 +1,16 @@
-<h2>🛰️Technologies</h2>
+# 🛰️Technologies
 
-
-
-**Frontend**
-* NextJS
+## 🖌️ Frontend
+* Astro
 * TailwindCSS
-* Framer Motion
+* SolidJS
+* SolidMotionOne
 
+## 🔒Authentication
+* Github
+* Google 
 
-
-**Backend**
+## 🏗️ Backend
+* Astro
 * Facade
-* Blakprint
-* Ayam
-* NextAuth
-* Next Server Actions
+* YAML
