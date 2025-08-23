@@ -28,7 +28,7 @@ export default config({
         "images",
         "metadata",
       ],
-      content: ["data", "posts", "resources", "pages"],
+      content: ["resources", "pages"],
     },
   },
   singletons: {
