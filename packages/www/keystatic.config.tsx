@@ -131,8 +131,18 @@ export default config({
       format: "json",
       path: "src/configs/navigator",
       schema: {
-        $resource: fields.text({ label: "Resource" }),
-        $version: fields.text({ label: "Version" }),
+        actions: fields.array(
+          fields.object(
+            {
+              label: fields.text({ label: "Label" }),
+              url: fields.url({ label: "URL" }),
+            },
+            { label: "Action" }
+          ),
+          {
+            itemLabel: (props) => props.fields.label.value ?? "Action",
+          }
+        ),
       },
     }),
     metadata: singleton({
@@ -159,8 +169,6 @@ export default config({
       path: "src/content/posts/*",
       format: { contentField: "content" },
       schema: {
-        $resource: fields.text({ label: "Resource" }),
-        $version: fields.text({ label: "Version" }),
         title: fields.slug({ name: { label: "Title" } }),
         content: fields.markdoc({
           label: "Content",
@@ -175,12 +183,11 @@ export default config({
     }),
     pages: collection({
       label: "Pages",
-      slugField: "$resource",
+      slugField: "slug",
       path: "src/content/pages/*",
       format: "json",
       schema: {
-        $resource: fields.text({ label: "Resource" }),
-        $version: fields.text({ label: "Version" }),
+        slug: fields.slug({ name: { label: "Key" } }),
         metaData: fields.object({
           title: fields.slug({ name: { label: "Title" } }),
         }),

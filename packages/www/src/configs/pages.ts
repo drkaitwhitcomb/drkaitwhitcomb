@@ -12,11 +12,11 @@ function basename(path: string) {
 }
 
 function mergePages() {
-  const out: Record<string, any> = { $resource: "pages", $version: "1.0.0" };
+  const out: Record<string, any> = {};
   for (const [path, mod] of Object.entries(modules)) {
     const data = (mod as any).default || {};
-    // Document-style: { $resource, $version?, metadata, data }
-    if (data && (data.$resource || data.metadata || data.metaData)) {
+    // Document-style: { metadata/metaData?, data? }
+    if (data && (data.metadata || data.metaData || data.data)) {
       const key = basename(path);
       out[key] = {
         metadata: data.metadata ?? data.metaData ?? {},

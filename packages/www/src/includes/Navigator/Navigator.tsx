@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { NavigatorActions } from "./NavigatorActions";
 import { NavigatorCover } from "./NavigatorCover";
 import { NavigatorContainer } from "./NavigatorContainer";
@@ -63,6 +63,9 @@ export default function Navigator({ actions: propActions }: Props) {
   const { navigator } = useConfiguration();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<ThemeMode>("system");
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [top, setTop] = useState<number | null>(null);
+  const dragState = useRef<{ startY: number; startTop: number; dragging: boolean }>({ startY: 0, startTop: 0, dragging: false });
 
   // Initialize theme from storage or system
   useEffect(() => {
@@ -70,6 +73,20 @@ export default function Navigator({ actions: propActions }: Props) {
     setMode(initial);
     applyTheme(initial);
   }, []);
+
+  // Initialize vertical position on mount; persist across sessions
+  useEffect(() => {
+    const saved = typeof window !== "undefined" ? Number(localStorage.getItem("navigator:yTop")) : NaN;
+    const initialTop = Number.isFinite(saved) ? saved : (typeof window !== "undefined" ? Math.max(16, window.innerHeight - 200) : 300);
+    setTop(initialTop);
+  }, []);
+
+  // Persist top when it changes
+  useEffect(() => {
+    if (top != null && typeof window !== "undefined") {
+      localStorage.setItem("navigator:yTop", String(top));
+    }
+  }, [top]);
 
   const toggleTheme = () => {
     const current = currentMode();
@@ -93,14 +110,56 @@ export default function Navigator({ actions: propActions }: Props) {
       label: isDark ? "Light" : "Dark",
       icon: isDark ? <SunIcon /> : <MoonIcon />,
       onClick: toggleTheme,
+      className: "w-12 h-12 p-0 rounded-full bg-white text-slate-900 dark:bg-neutral-900 dark:text-yellow-300 border border-gray-300 dark:border-neutral-700",
     };
     return [...base, themeAction];
   }, [propActions, navigator?.actions, mode]);
 
+  // Drag: Y-axis only
+  function clampTop(value: number) {
+    if (typeof window === "undefined") return value;
+    const min = 16; // padding from top
+    const max = window.innerHeight - 16 - 56; // padding from bottom minus approx button size
+    return Math.max(min, Math.min(max, value));
+  }
+
+  const onCoverPointerDown = (e: React.PointerEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    dragState.current = { startY: e.clientY, startTop: rect.top, dragging: true };
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+
+    const handleMove = (ev: PointerEvent) => {
+      if (!dragState.current.dragging) return;
+      const deltaY = ev.clientY - dragState.current.startY;
+      const nextTop = clampTop(dragState.current.startTop + deltaY);
+      setTop(nextTop);
+      ev.preventDefault();
+    };
+    const end = () => {
+      dragState.current.dragging = false;
+      window.removeEventListener("pointermove", handleMove);
+      window.removeEventListener("pointerup", end);
+      window.removeEventListener("pointercancel", end);
+    };
+    window.addEventListener("pointermove", handleMove, { passive: false });
+    window.addEventListener("pointerup", end);
+    window.addEventListener("pointercancel", end);
+  };
+
   return (
-    <NavigatorContainer>
+    <NavigatorContainer
+      ref={containerRef}
+      style={{ top: top ?? undefined }}
+      onMouseLeave={() => setOpen(false)}
+      aria-label="Navigator speed dial"
+    >
       <NavigatorActions actions={finalActions} open={open} />
-      <NavigatorCover open={open} onToggle={() => setOpen((v) => !v)} />
+      <NavigatorCover
+        onPointerDown={onCoverPointerDown}
+        onMouseEnter={() => setOpen(true)}
+        title={open ? "Close quick actions" : "Open quick actions"}
+      />
     </NavigatorContainer>
   );
 }
